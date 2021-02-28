@@ -34,6 +34,16 @@ function BookCalendar(){
 
     }, [])
 
+    let selectOnAvailableTime = (e) => {
+        let reason = window.prompt('what is your reason for the call?')
+        if(reason){
+            // call API for save in database
+        }
+    }
+    let selectOnAllocatedTime = (e) => {
+        alert('This is allocated slot. Please select another slot.')
+    }
+
     return(
         <div>
             <Calendar
@@ -42,6 +52,9 @@ function BookCalendar(){
                 startAccessor="start"
                 endAccessor="end"
                 style={{ height: 500 }}
+                selectable = {true}
+                onSelectSlot = {selectOnAvailableTime}
+                onSelectEvent = {selectOnAllocatedTime}
             />
         </div>
     )
