@@ -38,6 +38,7 @@ function BookCalendar(){
         if(e.slots.length > 1){
             let reason = window.prompt('What is your reason for the call?')
             if(reason){
+                alert(`The event with reason ${reason} on ${e.start} has been booked.`)
                 let payload = {
                     startDate: e.start,
                     reason
@@ -47,7 +48,7 @@ function BookCalendar(){
         }
     }
 
-    let selectOnAllocatedTime = (e) => {
+    let selectOnAllocatedTime = () => {
         alert('This is allocated slot. Please select another slot.')
     }
 
