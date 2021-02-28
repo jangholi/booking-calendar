@@ -1,7 +1,7 @@
-import LeaderBoard from '../pages/home'
+import Home from '../pages/home'
+import BookCalendar from '../pages/book-calendar'
 
 export const Routes = [
-    // TODO: we should create home page and then change the component of "/" to home
-    {key: 1, path: '/', component: LeaderBoard, exact: true},
-    {key: 2, path: '/leader-board', component: LeaderBoard}
+    {key: 1, path: '/', component: Home, exact: true},
+    {key: 2, path: '/book-calendar', component: BookCalendar}
 ];
