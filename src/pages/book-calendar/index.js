@@ -36,9 +36,13 @@ function BookCalendar(){
 
     let selectOnAvailableTime = (e) => {
         if(e.slots.length > 1){
-            let reason = window.prompt('what is your reason for the call?')
+            let reason = window.prompt('What is your reason for the call?')
             if(reason){
-                // call API for save in database
+                let payload = {
+                    startDate: e.start,
+                    reason
+                }
+                // call API for save in database and send this payload to API
             }
         }
     }
