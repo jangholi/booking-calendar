@@ -8,6 +8,7 @@ import {getAllocatedSlots} from '../../api/mentors'
 
 function BookCalendar(){
     const [event, setEvent] = React.useState([]);
+    const [view, setView] = React.useState('month');
     const localizer = momentLocalizer(moment);
 
     React.useEffect(() => {
@@ -35,16 +36,22 @@ function BookCalendar(){
     }, [])
 
     let selectOnAvailableTime = (e) => {
-        let reason = window.prompt('what is your reason for the call?')
-        if(reason){
-            // call API for save in database
+        if(e.slots.length > 1){
+            let reason = window.prompt('what is your reason for the call?')
+            if(reason){
+                // call API for save in database
+            }
+        } else {
+            setView('day');
         }
     }
+
     let selectOnAllocatedTime = (e) => {
         alert('This is allocated slot. Please select another slot.')
     }
 
     return(
+
         <div>
             <Calendar
                 localizer={localizer}
@@ -55,6 +62,9 @@ function BookCalendar(){
                 selectable = {true}
                 onSelectSlot = {selectOnAvailableTime}
                 onSelectEvent = {selectOnAllocatedTime}
+                views={['month', 'day', 'agenda']}
+                view={view}
+                onView={setView}
             />
         </div>
     )
