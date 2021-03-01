@@ -2,7 +2,7 @@ import './index.scss'
 
 function Header() {
     return(
-        <div className='header'> header</div>
+        <div className='header'>Calendar App</div>
     )
 }
 
