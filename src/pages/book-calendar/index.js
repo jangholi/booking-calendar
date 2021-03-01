@@ -8,6 +8,8 @@ import {getAllocatedSlots} from '../../api/mentors'
 
 function BookCalendar(){
     const [event, setEvent] = React.useState([]);
+    const [slots, setSlots] = React.useState(null);
+    const [view, setView] = React.useState('month');
     const localizer = momentLocalizer(moment);
 
     React.useEffect(() => {
@@ -34,17 +36,36 @@ function BookCalendar(){
 
     }, [])
 
-    let selectOnAvailableTime = (e) => {
-        if(e.slots.length > 1){
-            let reason = window.prompt('What is your reason for the call?')
-            if(reason){
-                alert(`The event with reason ${reason} on ${e.start} has been booked.`)
-                let payload = {
-                    startDate: e.start,
-                    reason
-                }
-                // call API for save in database and send this payload to API
+
+    let isNotAllowedTime = () => {
+        var todayAllocatedDate =  event.filter((val) => {
+            return moment(val.start).isSame(slots.start, 'day');
+        })
+
+        return todayAllocatedDate.map(function(e){
+            if((e.start === slots.start && slots.end === e.end)
+                || (slots.start < e.start && slots.end > e.start && slots.end < e.end)
+                || (slots.start < e.start && slots.end > e.end)
+                || (slots.start > e.start && slots.start < e.end && slots.end > e.end)
+            ){
+                return true
             }
+        }).includes(true)
+    }
+
+    let selectOnAvailableTime = (e) => {
+
+        if(view !== 'day') return
+        if(isNotAllowedTime()) return
+
+        let reason = window.prompt('What is your reason for the call?')
+        if(reason){
+            alert(`The event with reason ${reason} on ${e.start} has been booked.`)
+            let payload = {
+                startDate: e.start,
+                reason
+            }
+            // call API for save in database and send this payload to API
         }
     }
 
@@ -65,6 +86,8 @@ function BookCalendar(){
                 onSelectSlot = {selectOnAvailableTime}
                 onSelectEvent = {selectOnAllocatedTime}
                 views={['month', 'day', 'agenda']}
+                onSelecting = {(e) => setSlots(e)}
+                onView = {(e) => setView(e)}
             />
         </div>
     )
